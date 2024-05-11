@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
+import { ThemeProvider } from "@mui/material/styles";
+// import theme from "@/app/ui/theme";
+import theme from "./ui/theme";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Header from "./header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <ThemeProvider theme={theme}>
+        <body className={inter.className}>
+          <Header />
+          {children}
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
