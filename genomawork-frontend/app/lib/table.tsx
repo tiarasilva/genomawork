@@ -9,6 +9,7 @@ import Paper from "@mui/material/Paper";
 import { FoodReview } from "@/types/api.types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { Checkbox } from "@mui/material";
 
 export default function ReviewsTable({
   foodReviews,
@@ -41,7 +42,7 @@ export default function ReviewsTable({
               <TableCell align="right">{restaurant.type}</TableCell>
               <TableCell align="right">{restaurant.rank}</TableCell>
               <TableCell align="right">
-                {restaurant.visited ? "Sí" : "No"}
+                <Checkbox checked={restaurant.visited ? true : false} />
               </TableCell>
               <TableCell align="right">
                 <EditIcon /> <DeleteIcon />
