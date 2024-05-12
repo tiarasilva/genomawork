@@ -1,8 +1,11 @@
-0. Realizar las migraciones de los modelos
+0. Tener corriendo el entorno
+   source env/bin/activate
+
+1. Realizar las migraciones de los modelos
    python3 manage.py makemigrations
 
-1. Correr las migraciones
+2. Correr las migraciones
    python3 manage.py migrate
 
-2. Correr el servidor
+3. Correr el servidor
    python3 manage.py runserver

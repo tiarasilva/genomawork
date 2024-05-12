@@ -9,4 +9,4 @@ class FoodReviewsSerializer(serializers.HyperlinkedModelSerializer):
 class TypeRestaurantsSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = TypeRestaurants
-    fields = '__all__'
+    fields = ["id", "name"]

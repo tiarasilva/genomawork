@@ -6,25 +6,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { FoodReview } from "@/types/api.types";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-function createData(
-  name: string,
-  location: string,
-  type: string,
-  rank: number,
-  visited: boolean
-) {
-  return { name, location, type, rank, visited };
-}
-
-const rows = [
-  createData("Tiramisu", "ubicación 1", "italiana", 4, true),
-  createData("Niu Sushi", "ubicación 1", "italiana", 4, true),
-  createData("Borago", "ubicación 1", "italiana", 4, false),
-  createData("Otro", "ubicación 1", "italiana", 4, false),
-];
-
-export default function ReviewsTable() {
+export default function ReviewsTable({
+  foodReviews,
+}: {
+  foodReviews: FoodReview[];
+}) {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -39,18 +29,23 @@ export default function ReviewsTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {foodReviews.map((restaurant, index) => (
             <TableRow
-              key={row.name}
+              key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
+                {restaurant.name}
               </TableCell>
-              <TableCell align="right">{row.location}</TableCell>
-              <TableCell align="right">{row.type}</TableCell>
-              <TableCell align="right">{row.rank}</TableCell>
-              <TableCell align="right">{row.visited}</TableCell>
+              <TableCell align="right">{restaurant.location}</TableCell>
+              <TableCell align="right">{restaurant.type}</TableCell>
+              <TableCell align="right">{restaurant.rank}</TableCell>
+              <TableCell align="right">
+                {restaurant.visited ? "Sí" : "No"}
+              </TableCell>
+              <TableCell align="right">
+                <EditIcon /> <DeleteIcon />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
