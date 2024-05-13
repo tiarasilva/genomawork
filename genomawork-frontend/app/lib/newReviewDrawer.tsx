@@ -19,35 +19,27 @@ export default function NewReviewDrawer({
   open: boolean;
   onClose: () => void;
 }) {
-  const [typeRestaurants, setTypeRestaurants] = useState<any[]>([]);
   const [showAlert, setShowAlert] = useState(false);
   const [formNewFoodReview, setFormNewFoodReview] = useState<FoodReview>({
     id: 0,
     name: "",
     location: "",
-    type: 0,
+    typeFood: "",
     rank: 0,
     visited: false,
     country: "",
   });
-
-  // Obtenemos los restaurantes disponibles:
-  useEffect(() => {
-    fetch("http://localhost:8000/api/type_restaurants/")
-      .then((res) => res.json())
-      .then((data) => {
-        setTypeRestaurants(data.results);
-      });
-  }, []);
 
   const labels = [
     { name: "name", label: "Nombre local", type: "text" },
     { name: "location", label: "Ubicación", type: "text" },
     { name: "country", label: "País", type: "text" },
     { name: "rank", label: "Calificación", type: "number" },
+    { name: "typeFood", label: "Tipo de comida", type: "text" },
   ];
 
   const handleCreate = () => {
+    console.log(formNewFoodReview, typeof formNewFoodReview.typeFood);
     fetch("http://localhost:8000/api/food_reviews/", {
       method: "POST",
       headers: {
@@ -62,7 +54,7 @@ export default function NewReviewDrawer({
             id: 0,
             name: "",
             location: "",
-            type: 0,
+            typeFood: "",
             rank: 0,
             visited: false,
             country: "",
@@ -72,6 +64,9 @@ export default function NewReviewDrawer({
       })
       .then(() => {
         onClose();
+      })
+      .catch((error) => {
+        console.error("Error al crear nuevo local:", error);
       });
   };
 
@@ -83,8 +78,8 @@ export default function NewReviewDrawer({
   };
 
   const checkCompletenessTextfields = () => {
-    const { name, location, type, country } = formNewFoodReview;
-    if (name && location && type && country) {
+    const { name, location, typeFood, country } = formNewFoodReview;
+    if (name && location && typeFood && country) {
       return false;
     }
     return true;
@@ -123,27 +118,6 @@ export default function NewReviewDrawer({
             />
           </Box>
         ))}
-        <Box
-          key="type"
-          sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
-        >
-          <Typography variant="h6">Tipo de comida</Typography>
-          <TextField
-            id="outlined-select-currency"
-            select
-            label="Tipo"
-            helperText="Por favor selecciona una opción"
-            onChange={handleChange}
-            value={formNewFoodReview.type}
-            name="type"
-          >
-            {typeRestaurants.map((option) => (
-              <MenuItem key={option.id} value={option.id}>
-                {option.name}
-              </MenuItem>
-            ))}
-          </TextField>
-        </Box>
 
         <Box key="Visitado" sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="h6">Visitado</Typography>

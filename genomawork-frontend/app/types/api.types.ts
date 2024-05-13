@@ -2,7 +2,7 @@ export interface FoodReview {
   id: number;
   name: string;
   location: string;
-  type: number;
+  typeFood: string;
   rank: number | null;
   country: string;
   visited: boolean;

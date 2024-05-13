@@ -20,14 +20,13 @@ export default function ReviewsTable({
   foodReviews: FoodReview[];
   setFoodReviews: React.Dispatch<React.SetStateAction<FoodReview[]>>;
 }) {
-  const [editing, setEditing] = useState(false);
   const [order, setOrder] = useState<"asc" | "desc">("asc");
   const [orderBy, setOrderBy] = useState<keyof FoodReview>("name");
   const [editedFoodReview, setEditedFoodReview] = useState<FoodReview>({
     id: 0, // No existe el restaurant con id 0
     name: "",
     location: "",
-    type: 0,
+    typeFood: "",
     rank: null,
     visited: false,
     country: "",
@@ -62,7 +61,7 @@ export default function ReviewsTable({
           id: 0,
           name: "",
           location: "",
-          type: 0,
+          typeFood: "",
           rank: 0,
           visited: false,
           country: "",
@@ -126,7 +125,7 @@ export default function ReviewsTable({
     { name: "name", label: "Nombre local" },
     { name: "location", label: "Ubicación" },
     { name: "country", label: "País" },
-    { name: "type", label: "Tipo de comida" },
+    { name: "typeFood", label: "Tipo de comida" },
     { name: "rank", label: "Calificación" },
   ];
 
@@ -166,7 +165,7 @@ export default function ReviewsTable({
                         setEditedFoodReview({
                           ...editedFoodReview,
                           [name]:
-                            name === "type" || name === "rank"
+                            name === "rank"
                               ? parseInt(event.target.value, 10) || 0
                               : event.target.value,
                         })

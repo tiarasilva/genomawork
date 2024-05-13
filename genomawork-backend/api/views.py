@@ -1,5 +1,5 @@
-from .models import FoodReviews, TypeRestaurants
-from .serializers import FoodReviewsSerializer, TypeRestaurantsSerializer
+from .models import FoodReviews
+from .serializers import FoodReviewsSerializer
 from rest_framework import viewsets
 
 class FoodReviewsViewSet(viewsets.ModelViewSet):
@@ -19,20 +19,3 @@ class FoodReviewsViewSet(viewsets.ModelViewSet):
     print("Eliminando un local de comida")
     return super().delete(request, *args, **kwargs)
     
-
-
-class TypeRestaurantsViewSet(viewsets.ModelViewSet):
-  queryset = TypeRestaurants.objects.all()
-  serializer_class = TypeRestaurantsSerializer
-
-  def create(self, request, *args, **kwargs):
-    print("Creando un nuevo tipo de restaurante")
-    return super().create(request, *args, **kwargs)
-  
-  def update(self, request, *args, **kwargs):
-    print("Actualizando un tipo de restaurante")
-    return super().update(request, *args, **kwargs)
-  
-  def delete(self, request, *args, **kwargs):
-    print("Eliminando un tipo de restaurante")
-    return super().delete(request, *args, **kwargs)

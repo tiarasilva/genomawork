@@ -1,15 +1,27 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReviewsTable from "./lib/table";
-import { Box, Button, Skeleton } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  Checkbox,
+  ListItemText,
+  MenuItem,
+  Select,
+  Skeleton,
+} from "@mui/material";
 import NewReviewDrawer from "./lib/newReviewDrawer";
 import { FoodReview } from "./types/api.types";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = React.useState(true);
-  const [foodReviews, setFoodReviews] = React.useState<FoodReview[]>([]);
-  const [openDrawer, setOpenDrawer] = React.useState(false);
-
+  const [isLoading, setIsLoading] = useState(true);
+  const [foodReviews, setFoodReviews] = useState<FoodReview[]>([]);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [selectedType, setSelectedType] = useState<string[]>([]);
+  const foodTypesSet = new Set<string>(
+    foodReviews.map((review) => review.typeFood)
+  );
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpenDrawer(newOpen);
   };
@@ -45,6 +57,22 @@ export default function Home() {
             justifyContent: "flex-end",
           }}
         >
+          <Select
+            multiple
+            value={selectedType}
+            onChange={(event) => {
+              setSelectedType(event.target.value as string[]);
+            }}
+            sx={{ marginBottom: 2, marginRight: 2, width: 300 }}
+            renderValue={(selected) => selected.join(", ")}
+          >
+            {Array.from(foodTypesSet).map((typeFood: string) => (
+              <MenuItem key={typeFood} value={typeFood}>
+                <Checkbox checked={selectedType.indexOf(typeFood) > -1} />
+                <ListItemText primary={typeFood} />
+              </MenuItem>
+            ))}
+          </Select>
           <Button
             variant="contained"
             sx={{ marginBottom: 2 }}
@@ -53,8 +81,11 @@ export default function Home() {
             Nuevo local
           </Button>
         </Box>
+
         <ReviewsTable
-          foodReviews={foodReviews}
+          foodReviews={foodReviews.filter((review) =>
+            selectedType.includes(review.typeFood)
+          )}
           setFoodReviews={setFoodReviews}
         />
       </Box>

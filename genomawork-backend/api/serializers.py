@@ -1,12 +1,7 @@
-from .models import FoodReviews, TypeRestaurants
+from .models import FoodReviews
 from rest_framework import serializers
 
 class FoodReviewsSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = FoodReviews
-    fields = ["id", "name", "location", "type", "rank", "country", "visited"]
-
-class TypeRestaurantsSerializer(serializers.HyperlinkedModelSerializer):
-  class Meta:
-    model = TypeRestaurants
-    fields = ["id", "name"]
+    fields = ["id", "name", "location", "typeFood", "rank", "country", "visited"]
