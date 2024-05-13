@@ -58,6 +58,15 @@ export default function NewReviewDrawer({
       .then((response) => {
         if (response.ok) {
           setShowAlert(true);
+          setFormNewFoodReview({
+            id: 0,
+            name: "",
+            location: "",
+            type: 0,
+            rank: 0,
+            visited: false,
+            country: "",
+          });
         }
         return response.json();
       })
@@ -118,7 +127,7 @@ export default function NewReviewDrawer({
           key="type"
           sx={{ display: "flex", flexDirection: "column", marginBottom: 2 }}
         >
-          <Typography variant="h6">Tipo de local</Typography>
+          <Typography variant="h6">Tipo de comida</Typography>
           <TextField
             id="outlined-select-currency"
             select

@@ -21,7 +21,7 @@ export default function Home() {
         setFoodReviews(data.results);
         setIsLoading(false);
       });
-  }, []);
+  }, [foodReviews]);
 
   if (isLoading) {
     return (
