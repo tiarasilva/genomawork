@@ -73,6 +73,19 @@ export default function ReviewsTable({
       });
   };
 
+  const handleDelete = (id: number) => {
+    fetch(`http://localhost:8000/api/food_reviews/${id}/`, {
+      method: "DELETE",
+    })
+      .then(() => {
+        setFoodReviews(foodReviews.filter((review) => review.id !== id));
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+
+  // PARA REFACTOR:
   // const labels = [
   //   { name: "name", label: "Nombre local", type: "text" },
   //   { name: "location", label: "Ubicación", type: "text" },
@@ -176,6 +189,7 @@ export default function ReviewsTable({
               </TableCell>
 
               <TableCell align="right">
+                {/* EDIT */}
                 <Button onClick={() => handleEditId(restaurant.id)}>
                   <EditIcon />
                 </Button>
@@ -184,7 +198,9 @@ export default function ReviewsTable({
                     <SaveIcon />
                   </Button>
                 )}
-                <Button>
+
+                {/* DELETE */}
+                <Button onClick={() => handleDelete(restaurant.id)}>
                   <DeleteIcon />
                 </Button>
               </TableCell>

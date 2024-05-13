@@ -3,26 +3,36 @@ from .serializers import FoodReviewsSerializer, TypeRestaurantsSerializer
 from rest_framework import viewsets
 
 class FoodReviewsViewSet(viewsets.ModelViewSet):
-    queryset = FoodReviews.objects.all()
-    serializer_class = FoodReviewsSerializer
+  queryset = FoodReviews.objects.all()
+  serializer_class = FoodReviewsSerializer
 
-    # POST
-    def create(self, request, *args, **kwargs):
-        print("Creando un nuevo local de comida")
-        return super().create(request, *args, **kwargs)
+  # POST
+  def create(self, request, *args, **kwargs):
+    print("Creando un nuevo local de comida")
+    return super().create(request, *args, **kwargs)
+  
+  def update(self, request, *args, **kwargs):
+    print("Actualizando un local de comida")
+    return super().update(request, *args, **kwargs)
+  
+  def delete(self, request, *args, **kwargs):
+    print("Eliminando un local de comida")
+    return super().delete(request, *args, **kwargs)
     
-    def update(self, request, *args, **kwargs):
-        print("Actualizando un local de comida")
-        return super().update(request, *args, **kwargs)
+
 
 class TypeRestaurantsViewSet(viewsets.ModelViewSet):
-    queryset = TypeRestaurants.objects.all()
-    serializer_class = TypeRestaurantsSerializer
+  queryset = TypeRestaurants.objects.all()
+  serializer_class = TypeRestaurantsSerializer
 
-    def create(self, request, *args, **kwargs):
-        print("Creando un nuevo tipo de restaurante")
-        return super().create(request, *args, **kwargs)
-    
-    def update(self, request, *args, **kwargs):
-        print("Actualizando un tipo de restaurante")
-        return super().update(request, *args, **kwargs)
+  def create(self, request, *args, **kwargs):
+    print("Creando un nuevo tipo de restaurante")
+    return super().create(request, *args, **kwargs)
+  
+  def update(self, request, *args, **kwargs):
+    print("Actualizando un tipo de restaurante")
+    return super().update(request, *args, **kwargs)
+  
+  def delete(self, request, *args, **kwargs):
+    print("Eliminando un tipo de restaurante")
+    return super().delete(request, *args, **kwargs)
