@@ -3,10 +3,11 @@ import React, { useEffect } from "react";
 import ReviewsTable from "./lib/table";
 import { Box, Button, Skeleton } from "@mui/material";
 import NewReviewDrawer from "./lib/newReviewDrawer";
+import { FoodReview } from "./types/api.types";
 
 export default function Home() {
   const [isLoading, setIsLoading] = React.useState(true);
-  const [foodReviews, setFoodReviews] = React.useState([]);
+  const [foodReviews, setFoodReviews] = React.useState<FoodReview[]>([]);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -52,7 +53,10 @@ export default function Home() {
             Nuevo local
           </Button>
         </Box>
-        <ReviewsTable foodReviews={foodReviews} />
+        <ReviewsTable
+          foodReviews={foodReviews}
+          setFoodReviews={setFoodReviews}
+        />
       </Box>
       <NewReviewDrawer open={openDrawer} onClose={toggleDrawer(false)} />
     </Box>

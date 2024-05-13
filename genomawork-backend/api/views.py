@@ -10,6 +10,10 @@ class FoodReviewsViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print("Creando un nuevo local de comida")
         return super().create(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        print("Actualizando un local de comida")
+        return super().update(request, *args, **kwargs)
 
 class TypeRestaurantsViewSet(viewsets.ModelViewSet):
     queryset = TypeRestaurants.objects.all()
@@ -18,3 +22,7 @@ class TypeRestaurantsViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         print("Creando un nuevo tipo de restaurante")
         return super().create(request, *args, **kwargs)
+    
+    def update(self, request, *args, **kwargs):
+        print("Actualizando un tipo de restaurante")
+        return super().update(request, *args, **kwargs)

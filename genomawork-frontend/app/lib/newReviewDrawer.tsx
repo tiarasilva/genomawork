@@ -22,6 +22,7 @@ export default function NewReviewDrawer({
   const [typeRestaurants, setTypeRestaurants] = useState<any[]>([]);
   const [showAlert, setShowAlert] = useState(false);
   const [formNewFoodReview, setFormNewFoodReview] = useState<FoodReview>({
+    id: 0,
     name: "",
     location: "",
     type: 0,
@@ -38,8 +39,6 @@ export default function NewReviewDrawer({
         setTypeRestaurants(data.results);
       });
   }, []);
-
-  console.log("typeRestaurants: ", typeRestaurants);
 
   const labels = [
     { name: "name", label: "Nombre local", type: "text" },

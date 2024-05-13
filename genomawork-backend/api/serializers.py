@@ -4,7 +4,7 @@ from rest_framework import serializers
 class FoodReviewsSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
     model = FoodReviews
-    fields = '__all__'
+    fields = ["id", "name", "location", "type", "rank", "country", "visited"]
 
 class TypeRestaurantsSerializer(serializers.HyperlinkedModelSerializer):
   class Meta:
