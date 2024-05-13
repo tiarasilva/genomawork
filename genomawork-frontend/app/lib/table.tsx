@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
+import TableSortLabel from "@mui/material/TableSortLabel";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
@@ -20,6 +21,8 @@ export default function ReviewsTable({
   setFoodReviews: React.Dispatch<React.SetStateAction<FoodReview[]>>;
 }) {
   const [editing, setEditing] = useState(false);
+  const [order, setOrder] = useState<"asc" | "desc">("asc");
+  const [orderBy, setOrderBy] = useState<keyof FoodReview>("name");
   const [editedFoodReview, setEditedFoodReview] = useState<FoodReview>({
     id: 0, // No existe el restaurant con id 0
     name: "",
@@ -34,16 +37,13 @@ export default function ReviewsTable({
     const restaurantToEdit = foodReviews.find(
       (restaurant) => restaurant.id === id
     );
-    console.log("restaurantToEdit: ", restaurantToEdit);
     if (restaurantToEdit) {
       setEditedFoodReview(restaurantToEdit);
     }
-
-    console.log("editedFoodReview", editedFoodReview);
   };
 
+  // GUARDAR
   const handleSave = () => {
-    console.log("ANTES DE GUARDAReditedFoodReview", editedFoodReview);
     fetch(`http://localhost:8000/api/food_reviews/${editedFoodReview.id}/`, {
       method: "PUT",
       headers: {
@@ -85,108 +85,98 @@ export default function ReviewsTable({
       });
   };
 
+  // ORDENAMIENTO
+  const handleSort = (property: keyof FoodReview) => {
+    const isASC = orderBy === property && order === "asc";
+    setOrder(isASC ? "desc" : "asc");
+    setOrderBy(property);
+  };
+
+  function comparator<FoodReview>(
+    a: FoodReview,
+    b: FoodReview,
+    orderBy: keyof FoodReview
+  ) {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  }
+
+  const sorterArray = (array: FoodReview[], order: "asc" | "desc") => {
+    const copy = [...array];
+    const sorted = copy.sort((a, b) => {
+      return order === "desc"
+        ? comparator(a, b, orderBy)
+        : -comparator(a, b, orderBy);
+    });
+    return sorted;
+  };
+
+  const visibleRows = useMemo(
+    () => sorterArray(foodReviews, order),
+    [order, orderBy, foodReviews]
+  );
+
   // PARA REFACTOR:
-  // const labels = [
-  //   { name: "name", label: "Nombre local", type: "text" },
-  //   { name: "location", label: "Ubicación", type: "text" },
-  //   { name: "country", label: "País", type: "text" },
-  //   { name: "rank", label: "Calificación", type: "number" },
-  // ];
+  const labels = [
+    { name: "name", label: "Nombre local" },
+    { name: "location", label: "Ubicación" },
+    { name: "country", label: "País" },
+    { name: "type", label: "Tipo de comida" },
+    { name: "rank", label: "Calificación" },
+  ];
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Nombre</TableCell>
-            <TableCell align="right">Ubicación</TableCell>
-            <TableCell align="right">Tipo</TableCell>
-            <TableCell align="right">Calificación</TableCell>
+            {labels.map(({ name, label }) => (
+              <TableCell align="right" key={name}>
+                <TableSortLabel
+                  active={orderBy === name}
+                  direction={orderBy === name ? order : "asc"}
+                  onClick={() => handleSort(name as keyof FoodReview)}
+                >
+                  {label}
+                </TableSortLabel>
+              </TableCell>
+            ))}
             <TableCell align="right">Visitado</TableCell>
             <TableCell align="right"></TableCell>
           </TableRow>
         </TableHead>
+
         <TableBody>
-          {foodReviews.map((restaurant, index) => (
+          {visibleRows.map((restaurant, index) => (
             <TableRow
               key={index}
               sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
-                {editedFoodReview.id === restaurant.id ? (
-                  <TextField
-                    value={editedFoodReview.name}
-                    onChange={(event) =>
-                      setEditedFoodReview({
-                        ...editedFoodReview,
-                        name: event.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  restaurant.name
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {editedFoodReview.id === restaurant.id ? (
-                  <TextField
-                    value={editedFoodReview.location}
-                    onChange={(event) =>
-                      setEditedFoodReview({
-                        ...editedFoodReview,
-                        location: event.target.value,
-                      })
-                    }
-                  />
-                ) : (
-                  restaurant.location
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {editedFoodReview.id === restaurant.id ? (
-                  <TextField
-                    value={editedFoodReview.type}
-                    onChange={(event) =>
-                      setEditedFoodReview({
-                        ...editedFoodReview,
-                        type: parseInt(event.target.value, 10) || 1,
-                      })
-                    }
-                  />
-                ) : (
-                  restaurant.type
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {editedFoodReview.id === restaurant.id ? (
-                  <TextField
-                    value={editedFoodReview.rank}
-                    onChange={(event) =>
-                      setEditedFoodReview({
-                        ...editedFoodReview,
-                        rank: parseInt(event.target.value, 10) || null,
-                      })
-                    }
-                  />
-                ) : (
-                  restaurant.rank
-                )}
-              </TableCell>
-              <TableCell align="right">
-                {editedFoodReview.id === restaurant.id ? (
-                  <Checkbox
-                    checked={editedFoodReview.visited}
-                    onChange={(event) =>
-                      setEditedFoodReview({
-                        ...editedFoodReview,
-                        visited: event.target.checked,
-                      })
-                    }
-                  />
-                ) : (
-                  <Checkbox checked={restaurant.visited ? true : false} />
-                )}
-              </TableCell>
+              {labels.map(({ name }) => (
+                <TableCell align="right" key={name}>
+                  {editedFoodReview.id === restaurant.id ? (
+                    <TextField
+                      value={editedFoodReview[name as keyof FoodReview]}
+                      onChange={(event) =>
+                        setEditedFoodReview({
+                          ...editedFoodReview,
+                          [name]:
+                            name === "type" || name === "rank"
+                              ? parseInt(event.target.value, 10) || 0
+                              : event.target.value,
+                        })
+                      }
+                    />
+                  ) : (
+                    restaurant[name as keyof FoodReview]
+                  )}
+                </TableCell>
+              ))}
 
               <TableCell align="right">
                 {/* EDIT */}
