@@ -87,8 +87,8 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'genoma_tiara',
-        'USER': 'tiarasilva',
-        'PASSWORD': 'tiara123',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
