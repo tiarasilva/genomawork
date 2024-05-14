@@ -12,6 +12,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { Button, Checkbox, TextField } from "@mui/material";
+import { API_URL } from "../../constants";
 
 export default function ReviewsTable({
   foodReviews,
@@ -43,7 +44,7 @@ export default function ReviewsTable({
 
   // GUARDAR
   const handleSave = () => {
-    fetch(`http://localhost:8000/api/food_reviews/${editedFoodReview.id}/`, {
+    fetch(`${API_URL}/food_reviews/${editedFoodReview.id}/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +74,7 @@ export default function ReviewsTable({
   };
 
   const handleDelete = (id: number) => {
-    fetch(`http://localhost:8000/api/food_reviews/${id}/`, {
+    fetch(`${API_URL}/food_reviews/${id}/`, {
       method: "DELETE",
     })
       .then(() => {
@@ -102,7 +103,7 @@ export default function ReviewsTable({
         : a[orderBy];
     const valueB =
       typeof b[orderBy] === "string"
-        ? (a[orderBy] as string).toLowerCase()
+        ? (b[orderBy] as string).toLowerCase()
         : b[orderBy];
 
     if (valueB < valueA) {

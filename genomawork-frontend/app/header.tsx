@@ -13,7 +13,7 @@ export default function Header() {
         boxShadow: 1,
       }}
     >
-      <Typography>Header Tiara Silva</Typography>
+      <Typography>Tiara Silva</Typography>
     </Box>
   );
 }

@@ -21,6 +21,8 @@ import NewReviewDrawer from "./lib/newReviewDrawer";
 import { FoodReview } from "./types/api.types";
 import SearchIcon from "@mui/icons-material/Search";
 
+import { API_URL } from "../constants";
+
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [foodReviews, setFoodReviews] = useState<FoodReview[]>([]);
@@ -38,14 +40,14 @@ export default function Home() {
 
   useEffect(() => {
     if (searchValue === "") {
-      fetch("http://localhost:8000/api/food_reviews/")
+      fetch(`${API_URL}/food_reviews/`)
         .then((res) => res.json())
         .then((data) => {
           setFoodReviews(data.results);
           setIsLoading(false);
         });
     } else {
-      fetch(`http://localhost:8000/api/food_reviews/?search=${searchValue}`)
+      fetch(`${API_URL}/food_reviews/?search=${searchValue}`)
         .then((res) => res.json())
         .then((data) => {
           setFoodReviews(data.results);

@@ -1,6 +1,25 @@
 # genomawork
 
-Pasos:
+Se cumplieron todos los puntos establecidos en el enunciado. El proyecto esta funcionando de manera local, no fue desplegado en ningún lugar.
+
+## Tecnologías
+
+Backend
+
+- Python 3.11.6
+- Django REST Framework 3.15.1
+
+Frontend:
+
+- React 18
+- Material UI 5.15.17
+- Next.JS 14.2.3
+
+## Instalación dependencias
+
+- yarn install
+
+## Pasos:
 
 1. Primero se debe crear una base de datos de PostgreSQL local:
 

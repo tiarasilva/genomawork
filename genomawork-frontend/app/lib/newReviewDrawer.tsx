@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { FoodReview } from "@/types/api.types";
 import CheckIcon from "@mui/icons-material/Check";
+import { API_URL } from "../../constants";
 
 export default function NewReviewDrawer({
   open,
@@ -40,7 +41,7 @@ export default function NewReviewDrawer({
 
   const handleCreate = () => {
     console.log(formNewFoodReview, typeof formNewFoodReview.typeFood);
-    fetch("http://localhost:8000/api/food_reviews/", {
+    fetch(`${API_URL}/api/food_reviews/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
