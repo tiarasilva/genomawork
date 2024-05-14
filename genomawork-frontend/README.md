@@ -2,30 +2,35 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-Pasos:
-
-1. Primero se debe crear una base de datos de PostgreSQL local. Además, se deben actualizar los settings.py con los datos de la BDD:
-   ```bash
-     CREATE DATABASE genoma_tiara;
-   ```
-2. Se debe iniciar el entorno:
-   ```bash
-   source env/bin/activate
-   ```
-3. Luego se deben correr las migraciones con:
+First, run the development server:
 
 ```bash
-  python3 manage.py migrate
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-4. Se debe inicial el backend con
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-  python3 manage.py runserver
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-5. Finalmente, se debe correr el frontend:
+This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-```bash
-    yarn dev
-```
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
