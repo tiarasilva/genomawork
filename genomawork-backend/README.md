@@ -1,7 +1,7 @@
 0. Tener corriendo el entorno
    source env/bin/activate
 
-1. Realizar las migraciones de los modelos
+1. Solo si se realizo un cambio en los modelos se debe correr:
    python3 manage.py makemigrations
 
 2. Correr las migraciones

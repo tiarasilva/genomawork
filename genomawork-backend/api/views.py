@@ -1,10 +1,14 @@
 from .models import FoodReviews
 from .serializers import FoodReviewsSerializer
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
+from django_filters.rest_framework import DjangoFilterBackend
 
 class FoodReviewsViewSet(viewsets.ModelViewSet):
   queryset = FoodReviews.objects.all()
   serializer_class = FoodReviewsSerializer
+  filter_backends = [filters.SearchFilter, DjangoFilterBackend]
+  search_fields = ['name', 'location', 'country', 'typeFood', 'rank', 'visited']
+  filterset_fields = ['name', 'location', 'country', 'typeFood', 'rank', 'visited']
 
   # POST
   def create(self, request, *args, **kwargs):
@@ -18,4 +22,5 @@ class FoodReviewsViewSet(viewsets.ModelViewSet):
   def delete(self, request, *args, **kwargs):
     print("Eliminando un local de comida")
     return super().delete(request, *args, **kwargs)
-    
+
+

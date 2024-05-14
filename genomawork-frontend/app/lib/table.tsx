@@ -96,10 +96,19 @@ export default function ReviewsTable({
     b: FoodReview,
     orderBy: keyof FoodReview
   ) {
-    if (b[orderBy] < a[orderBy]) {
+    const valueA =
+      typeof a[orderBy] === "string"
+        ? (a[orderBy] as string).toLowerCase()
+        : a[orderBy];
+    const valueB =
+      typeof b[orderBy] === "string"
+        ? (a[orderBy] as string).toLowerCase()
+        : b[orderBy];
+
+    if (valueB < valueA) {
       return -1;
     }
-    if (b[orderBy] > a[orderBy]) {
+    if (valueB > valueA) {
       return 1;
     }
     return 0;
